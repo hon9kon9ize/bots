@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 COPY src/ src/
-COPY .env .env
 
 RUN yarn
 RUN yarn build
