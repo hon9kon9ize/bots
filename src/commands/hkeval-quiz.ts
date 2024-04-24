@@ -58,7 +58,7 @@ export async function stingSelectMenuResponse(
 ) {
   const answer = userQuizAnswerMap.get(interaction.user.id);
   const userAnswer = interaction.values[0];
-  await interaction.deferReply({ ephemeral: true });
+  await interaction.deferReply();
   const correct = answer === userAnswer; // Assume A is the correct answer
   await interaction.editReply({
     content: correct ? 'Correct! 🎉' : 'Incorrect! 😢',
@@ -67,7 +67,7 @@ export async function stingSelectMenuResponse(
 }
 
 export async function execute(interaction: CommandInteraction) {
-  await interaction.deferReply({ ephemeral: true });
+  await interaction.deferReply();
 
   try {
     const record = await getShuffleRecord();
