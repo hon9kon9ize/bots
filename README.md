@@ -13,3 +13,7 @@ yarn install
 
 yarn dev
 ```
+
+## Database
+
+We use Airtable as our database, which connected to the Google Sheet for the HKEval benchmark curation.
