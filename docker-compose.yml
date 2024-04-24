@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   discord-bot:
-    image: ghcr.io/hon9kon9ize/yue-discord-bot:latest
+    image: ghcr.io/hon9kon9ize/discord-bot:latest
     restart: always
     env_file:
       - .env
