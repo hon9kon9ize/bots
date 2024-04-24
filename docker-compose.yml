@@ -3,5 +3,9 @@ services:
   discord-bot:
     image: ghcr.io/hon9kon9ize/discord-bot:latest
     restart: always
-    env_file:
-      - .env
+    environment:
+      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      AIRTABLE_API_KEY: ${AIRTABLE_API_KEY}
+      AIRTABLE_BASE_ID: ${AIRTABLE_BASE_ID}
+      AIRTABLE_TABLE_IDS: ${AIRTABLE_TABLE_IDS}
