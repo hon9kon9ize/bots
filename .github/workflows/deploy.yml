@@ -16,36 +16,36 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - dockerfile: ./Dockerfile
-            image: ghcr.io/hon9kon9ize/discord-bot
-            name: discord-bot
     permissions:
       contents: read
       packages: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and push Docker image of the service
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64
+          file: ./Dockerfile
           push: true
-          tags: 'hon9kon9ize/discord-bot:latest'
+          no-cache: true
+          platforms: linux/amd64
+          tags: 'ghcr.io/hon9kon9ize/discord-bot:latest'
 
   deploy:
     runs-on: ubuntu-latest
