@@ -2,6 +2,8 @@
 
 This is a Discord bot for HON9KON9IZE's Discord server. It is written in Nodejs and uses the discord.js library.
 
+If you want to contribute or have any questions, please join our [Discord server](https://discord.gg/gG6GPp8XxQ).
+
 ## Features
 
 - HKEval Quiz, a quiz game where you have to guess the correct answer to a question, the question is come from the HKEval benchmark.
