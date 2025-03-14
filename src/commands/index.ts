@@ -1,11 +1,7 @@
-import * as ping from './ping';
-import * as hkevalQuiz from './hkeval-quiz';
+import ping from './ping';
+import tts from './tts';
 
 export const commands = {
   ping,
-  'hkeval-quiz': hkevalQuiz
-};
-
-export const stringSelectMenuResponses = {
-  'hkeval-quiz': hkevalQuiz
+  'my-tts': tts
 };

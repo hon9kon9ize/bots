@@ -1,48 +1,132 @@
 import { Client } from 'discord.js';
 import { config } from './config';
-import { commands, stringSelectMenuResponses } from './commands';
+import { commands } from './commands';
 import { deployCommands } from './deploy-commands';
+import { Context, Markup, NarrowedContext, session, Telegraf } from 'telegraf';
+import { getTaskResult, tts, Voice, voices } from './tts';
+import { Message, Update } from 'telegraf/typings/core/types/typegram';
 
-const client = new Client({
+// Discord bot
+const discordClient = new Client({
   intents: ['Guilds', 'GuildMessages', 'DirectMessages']
 });
 
-client.once('ready', () => {
-  console.log('Discord bot is ready! 🤖');
+discordClient.once('ready', () => {
+  console.log('hon9kon9ize bot is ready! 🤖');
 });
 
-client.on('guildCreate', async (guild) => {
+discordClient.on('guildCreate', async (guild) => {
   await deployCommands({ guildId: guild.id });
 });
 
-client.on('interactionCreate', async (interaction) => {
+discordClient.on('interactionCreate', async (interaction) => {
   if (interaction.isCommand()) {
     const { commandName } = interaction;
+
+    console.log(commandName);
 
     if (commands[commandName as keyof typeof commands]) {
       commands[commandName as keyof typeof commands].execute(interaction);
     }
-  } else if (interaction.isStringSelectMenu()) {
-    const commandName = interaction.message.interaction?.commandName;
-
-    if (!commandName) {
-      return;
-    }
-
-    if (commandName in stringSelectMenuResponses) {
-      stringSelectMenuResponses[
-        commandName as keyof typeof stringSelectMenuResponses
-      ].stingSelectMenuResponse(interaction);
-    }
-
-    // const answer = values[0];
-    // const correct = answer === 'A'; // Assume A is the correct answer
-
-    // await interaction.update({
-    //   content: correct ? 'Correct! 🎉' : 'Incorrect! 😢',
-    //   components: []
-    // });
   }
 });
 
-client.login(config.DISCORD_TOKEN);
+discordClient.login(config.DISCORD_BOT_TOKEN);
+
+// Telegram bot
+
+interface SessionData {
+  voice?: Voice;
+}
+
+interface MyContext extends Context {
+  session?: SessionData;
+  // ... more props go here
+}
+
+const bot = new Telegraf<MyContext>(process.env.TELEGRAM_BOT_TOKEN as string);
+
+bot.use(
+  session({
+    defaultSession: () => ({
+      voice: voices['mk_girl']
+    })
+  })
+);
+
+bot.command('voice', async (ctx) => {
+  return ctx.reply('⛏️揀你想要把聲', Markup.keyboard([['👧 凱婷']]).resize());
+});
+
+bot.start((ctx) => {
+  return ctx.reply('你打嘅字都會轉做聲音。你可以打 /voice 揀聲。');
+});
+
+const pollTaskResult = async (
+  taskId: string,
+  ctx: NarrowedContext<MyContext, Update.MessageUpdate<Message>>,
+  attempts = 0
+) => {
+  const taskResult = await getTaskResult(taskId);
+
+  if (taskResult.status === 'PENDING') {
+    if (attempts >= 20) {
+      await ctx.reply('❌ 搞唔掂，等陣再試下。');
+      return;
+    }
+
+    return new Promise((resolve) =>
+      setTimeout(() => resolve(pollTaskResult(taskId, ctx, attempts + 1)), 3000)
+    );
+  }
+
+  if (taskResult.status === 'FAILED') {
+    await ctx.reply('❌ 搞唔掂，等陣再試下。');
+    return;
+  }
+
+  if (!taskResult.audio_url) {
+    await ctx.reply('❌ 搞唔掂，等陣再試下。');
+    return;
+  }
+
+  const audioBuffer = Buffer.from(taskResult.audio_url.split(',')[1], 'base64');
+
+  await ctx.replyWithAudio({
+    source: audioBuffer
+  });
+};
+
+bot.on('message', async (ctx) => {
+  if (ctx.message && 'text' in ctx.message) {
+    const text = ctx.message.text;
+
+    if (text === '👧 凱婷') {
+      if (ctx.session) {
+        ctx.session.voice = voices['mk_gril'];
+      }
+    } else if (ctx.session?.voice) {
+      await ctx.reply('⚙️ 幫緊你...');
+
+      try {
+        const taskId = await tts(text, ctx.session?.voice);
+
+        await pollTaskResult(taskId, ctx);
+      } catch (error) {
+        console.error(error);
+        await ctx.reply('❌ 搞唔掂，等陣再試下。');
+      }
+    }
+  }
+});
+
+bot.launch();
+
+process.once('SIGINT', () => {
+  bot.stop('SIGINT');
+  discordClient.destroy();
+});
+process.once('SIGTERM', () => {
+  bot.stop('SIGTERM');
+  discordClient.destroy();
+});

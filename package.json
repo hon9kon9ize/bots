@@ -1,9 +1,8 @@
 {
-  "name": "hon9kon9ize-discord-bot",
+  "name": "hon9kon9ize-bots",
   "version": "1.0.0",
-  "description": "Discord Bot for HON9KON9IZE's Discord Server",
-  "license": "ISC",
-  "author": "",
+  "description": "Bot for Hon9Kon9ize's Telegram/Discord server",
+  "author": "Joseph Cheng<joseph.cheng@hon9kon9ize.com>",
   "main": "index.js",
   "scripts": {
     "build": "tsup src/index.ts --minify",
@@ -15,9 +14,11 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "airtable": "^0.12.2",
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.5"
+    "axios": "1.8.3",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.5",
+    "form-data": "4.0.2",
+    "telegraf": "4.16.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
