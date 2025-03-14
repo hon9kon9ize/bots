@@ -21,7 +21,7 @@ const pollTaskResult = async (
     return new Promise((resolve) =>
       setTimeout(
         () => resolve(pollTaskResult(taskId, interaction, attempts + 1)),
-        3000
+        1000
       )
     );
   }

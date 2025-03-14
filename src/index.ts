@@ -76,7 +76,7 @@ const pollTaskResult = async (
     }
 
     return new Promise((resolve) =>
-      setTimeout(() => resolve(pollTaskResult(taskId, ctx, attempts + 1)), 3000)
+      setTimeout(() => resolve(pollTaskResult(taskId, ctx, attempts + 1)), 1000)
     );
   }
 
@@ -104,6 +104,8 @@ bot.on('message', async (ctx) => {
     if (text === '👧 凱婷') {
       if (ctx.session) {
         ctx.session.voice = voices['mk_gril'];
+
+        await ctx.reply('轉把聲做：👧 凱婷');
       }
     } else if (ctx.session?.voice) {
       await ctx.reply('⚙️ 幫緊你...');
