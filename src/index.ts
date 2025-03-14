@@ -103,7 +103,7 @@ bot.on('message', async (ctx) => {
 
     if (text === '👧 凱婷') {
       if (ctx.session) {
-        ctx.session.voice = voices['mk_gril'];
+        ctx.session.voice = voices['mk_girl'];
 
         await ctx.reply('轉把聲做：👧 凱婷');
       }
