@@ -1,11 +1,13 @@
 version: '3.9'
 services:
   discord-bot:
-    image: ghcr.io/hon9kon9ize/discord-bot:latest
+    build:
+      context: .
     restart: always
     environment:
-      DISCORD_TOKEN: ${DISCORD_TOKEN}
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
-      TTS_CLIENT_ID: ${TTS_SERVER_CLIENT_ID}
+      TTS_CLIENT_ID: ${TTS_CLIENT_ID}
       TTS_CLIENT_SECRET: ${TTS_CLIENT_SECRET}
       TTS_API_URL: ${TTS_API_URL}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
