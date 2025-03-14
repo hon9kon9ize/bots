@@ -120,6 +120,11 @@ bot.on('message', async (ctx) => {
     } else if (ctx.session?.voice) {
       await ctx.reply('⚙️ 幫緊你...');
 
+      if (text.length > 30) {
+        await ctx.reply('❌ 你太長啦，最多 30 個字。');
+        return;
+      }
+
       try {
         const taskId = await tts(text, ctx.session?.voice);
 
