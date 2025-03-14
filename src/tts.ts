@@ -26,10 +26,16 @@ export interface Voice {
 
 export const voices: Record<string, Voice> = {
   mk_girl: {
-    name: '凱婷',
+    name: '👧 凱婷',
     promptText:
       '我決定咗啦，我要做一件到目前為止又或者永遠都唔會再見到我做嘅事。',
     promptAudio: path.join(__dirname, './voices/mk_girl.wav')
+  },
+  doraemon: {
+    name: '🥸 全叔',
+    promptText:
+      '各位觀眾大家好，我叮噹呢又同你哋見面啦。好多謝咁多年嚟各位嘅捧場同支持。',
+    promptAudio: path.join(__dirname, './voices/doraemon3.wav')
   }
 } as const;
 

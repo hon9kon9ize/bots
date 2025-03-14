@@ -101,11 +101,18 @@ bot.on('message', async (ctx) => {
   if (ctx.message && 'text' in ctx.message) {
     const text = ctx.message.text;
 
-    if (text === '👧 凱婷') {
-      if (ctx.session) {
-        ctx.session.voice = voices['mk_girl'];
+    if (
+      Object.keys(voices).findIndex((key) => voices[key].name === text) !== -1
+    ) {
+      const voiceKey = Object.keys(voices).find(
+        (key) => voices[key].name === text
+      );
+      const voice = voices[voiceKey as keyof typeof voices];
 
-        await ctx.reply('轉把聲做：👧 凱婷');
+      if (ctx.session && typeof voice !== 'undefined') {
+        ctx.session.voice = voice;
+
+        await ctx.reply(`轉把聲做：${text}`);
       }
     } else if (ctx.session?.voice) {
       await ctx.reply('⚙️ 幫緊你...');
