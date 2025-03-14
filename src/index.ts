@@ -23,8 +23,6 @@ discordClient.on('interactionCreate', async (interaction) => {
   if (interaction.isCommand()) {
     const { commandName } = interaction;
 
-    console.log(commandName);
-
     if (commands[commandName as keyof typeof commands]) {
       commands[commandName as keyof typeof commands].execute(interaction);
     }
@@ -55,7 +53,12 @@ bot.use(
 );
 
 bot.command('voice', async (ctx) => {
-  return ctx.reply('⛏️揀你想要把聲', Markup.keyboard([['👧 凱婷']]).resize());
+  return ctx.reply(
+    '⛏️揀你想要把聲',
+    Markup.keyboard([
+      Object.keys(voices).map((key) => voices[key].name)
+    ]).resize()
+  );
 });
 
 bot.start((ctx) => {
