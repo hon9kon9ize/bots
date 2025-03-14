@@ -120,8 +120,8 @@ bot.on('message', async (ctx) => {
     } else if (ctx.session?.voice) {
       await ctx.reply('⚙️ 幫緊你...');
 
-      if (text.length > 30) {
-        await ctx.reply('❌ 你太長啦，最多 30 個字。');
+      if (text.length > 50) {
+        await ctx.reply('❌ 你太長啦，最多 50 個字。');
         return;
       }
 
