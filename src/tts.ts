@@ -1,7 +1,7 @@
 import axios from 'axios';
 import fs from 'node:fs';
-import path from 'node:path';
 import FormData from 'form-data';
+import { Voice } from './config';
 
 const TTS_CLIENT_ID = process.env.TTS_CLIENT_ID;
 const TTS_CLIENT_SECRET = process.env.TTS_CLIENT_SECRET;
@@ -17,33 +17,6 @@ interface TaskResult {
   status: 'PENDING' | 'SUCCESS' | 'FAILED';
   audio_url: string; // base64 encoded wav audio
 }
-
-export interface Voice {
-  name: string;
-  promptText: string;
-  promptAudio: string;
-}
-
-export const voices: Record<string, Voice> = {
-  mk_girl: {
-    name: '👧 凱婷',
-    promptText:
-      '我決定咗啦，我要做一件到目前為止又或者永遠都唔會再見到我做嘅事。',
-    promptAudio: path.join(__dirname, './voices/mk_girl.wav')
-  },
-  doraemon: {
-    name: '🥸 全叔',
-    promptText:
-      '各位觀眾大家好，我叮噹呢又同你哋見面啦。好多謝咁多年嚟各位嘅捧場同支持。',
-    promptAudio: path.join(__dirname, './voices/doraemon3.wav')
-  },
-  sing: {
-    name: '⭐ 星仔',
-    promptText:
-      '塵世間最痛苦嘅事莫過於此，你把嘢喺我喉嚨度拖落去啊，唔需要猶豫㗎啦。',
-    promptAudio: path.join(__dirname, './voices/sing.wav')
-  }
-} as const;
 
 export const tts = async (inputText: string, voice: Voice): Promise<string> => {
   const form = new FormData();

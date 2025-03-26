@@ -1,6 +1,7 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
 import DiscordCommand from '../interfaces/discord-command';
-import { getTaskResult, tts, voices } from '../tts';
+import { getTaskResult, tts } from '../tts';
+import { voices } from '../config';
 
 const pollTaskResult = async (
   taskId: string,
@@ -61,8 +62,28 @@ export default {
         .setDescription('The voice to use')
         .setRequired(true)
         .addChoices({
-          name: '凱婷',
+          name: '👧 凱婷',
           value: 'mk_girl'
+        })
+    )
+    .addStringOption((option) =>
+      option
+        .setName('voice')
+        .setDescription('The voice to use')
+        .setRequired(true)
+        .addChoices({
+          name: '🥸 全叔',
+          value: 'doraemon'
+        })
+    )
+    .addStringOption((option) =>
+      option
+        .setName('voice')
+        .setDescription('The voice to use')
+        .setRequired(true)
+        .addChoices({
+          name: '⭐ 星仔',
+          value: 'sing'
         })
     ),
   async execute(interaction) {
