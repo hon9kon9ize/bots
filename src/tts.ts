@@ -36,6 +36,12 @@ export const voices: Record<string, Voice> = {
     promptText:
       '各位觀眾大家好，我叮噹呢又同你哋見面啦。好多謝咁多年嚟各位嘅捧場同支持。',
     promptAudio: path.join(__dirname, './voices/doraemon3.wav')
+  },
+  sing: {
+    name: '⭐ 星仔',
+    promptText:
+      '塵世間最痛苦嘅事莫過於此，你把嘢喺我喉嚨度拖落去啊，唔需要猶豫㗎啦。',
+    promptAudio: path.join(__dirname, './voices/sing.wav')
   }
 } as const;
 
