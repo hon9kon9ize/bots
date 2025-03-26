@@ -1,9 +1,9 @@
 import { Client } from 'discord.js';
-import { config } from './config';
+import { config, Voice, voices } from './config';
 import { commands } from './commands';
 import { deployCommands } from './deploy-commands';
 import { Context, Markup, NarrowedContext, session, Telegraf } from 'telegraf';
-import { getTaskResult, tts, Voice, voices } from './tts';
+import { getTaskResult, tts } from './tts';
 import { Message, Update } from 'telegraf/typings/core/types/typegram';
 
 // Discord bot
