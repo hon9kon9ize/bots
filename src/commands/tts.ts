@@ -65,22 +65,10 @@ export default {
           name: '👧 凱婷',
           value: 'mk_girl'
         })
-    )
-    .addStringOption((option) =>
-      option
-        .setName('voice')
-        .setDescription('The voice to use')
-        .setRequired(true)
         .addChoices({
           name: '🥸 全叔',
           value: 'doraemon'
         })
-    )
-    .addStringOption((option) =>
-      option
-        .setName('voice')
-        .setDescription('The voice to use')
-        .setRequired(true)
         .addChoices({
           name: '⭐ 星仔',
           value: 'sing'
